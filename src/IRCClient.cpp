@@ -12,9 +12,7 @@
 
 #include "IRCClient.h"
 
-IRCClient::IRCClient(const char* host, uint16_t port, Client& client) {
-  this->host = host;
-  this->port = port;
+IRCClient::IRCClient(Client& client) {
   this->client = &client;
   this->isConnected = false;
 }
@@ -29,9 +27,9 @@ IRCClient& IRCClient::setSentCallback(IRC_SENTCALLBACK_SIGNATURE) {
   return *this;
 }
 
-boolean IRCClient::connect(String nickname, String user, String password) {
+boolean IRCClient::connect(const char* host, uint16_t port, String nickname, String user, String password) {
   if (!connected()) {
-    int result = client->connect(this->host, this->port);
+    int result = client->connect(host, port);
     if (result == 1) {
       this->nickname = nickname;
       sendIRC("HELLO");

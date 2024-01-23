@@ -32,8 +32,6 @@ class IRCClient
     Client* client;
     IRC_CALLBACK_SIGNATURE;
     IRC_SENTCALLBACK_SIGNATURE;
-    const char* host;
-    uint16_t port;
     bool isConnected;
     String nickname;
     void sendIRC(String data);
@@ -41,10 +39,10 @@ class IRCClient
     void executeCallback(IRCMessage ircMessage);
 
   public:
-    IRCClient(const char*, uint16_t, Client& client);
+    IRCClient(Client& client);
     IRCClient& setCallback(IRC_CALLBACK_SIGNATURE);
     IRCClient& setSentCallback(IRC_SENTCALLBACK_SIGNATURE);
-    boolean connect(String nickname, String user, String password = "");
+    boolean connect(const char* host, uint16_t port, String nickname, String user, String password = "");
     boolean loop();
     boolean connected();
     void sendRaw(String data);
